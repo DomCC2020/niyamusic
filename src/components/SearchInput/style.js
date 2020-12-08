@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { $gray_500, $gray_600, px, variables } from '../../styles/global-style'
 
-export const Container=styled.div`
+export const Container = styled.div`
     display:flex;
     align-items:center;
     position:relative;
@@ -33,7 +33,7 @@ export const Container=styled.div`
         z-index:-1;
     }
 `
-export const Input=styled.input`
+export const Input = styled.input`
     font-size: ${variables['$font-size-base']};
     color: ${$gray_600};
     padding:0;

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { variables, px  } from '../../styles/global-style'
+import { variables, px } from '../../styles/global-style'
 
 const $space_y = px(12)
 export const Top = styled.div`
