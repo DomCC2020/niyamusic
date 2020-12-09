@@ -2,7 +2,8 @@ import React, { memo } from 'react'
 import { renderRoutes } from 'react-router-config'
 import { NavLink } from 'react-router-dom'
 import SearchInput from '../../components/SearchInput'
-import { Top, Tab, Content } from './style'
+import Scroll from '../../components/Scroll'
+import { Top, Tab, Container } from './style'
 
 function Home (props) {
   const { route } = props
@@ -18,12 +19,16 @@ function Home (props) {
         </Tab>
         <NavLink to='/rank' className='icon iconfont icon-touxiang' />
       </Top>
-      <Content>
-        <SearchInput />
-        <div className='content-page'>
-          {renderRoutes(route.routes)}
+      <Container>
+        <div className='container-search'>
+          <SearchInput />
         </div>
-      </Content>
+        <Scroll>
+          <div className='container-page'>
+            {renderRoutes(route.routes)}
+          </div>
+        </Scroll>
+      </Container>
     </div>
   )
 }

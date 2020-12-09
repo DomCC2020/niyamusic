@@ -31,6 +31,8 @@ export const Container = styled.div`
         left: 34px;
         line-height:${px(35)};
         z-index:-1;
+        transform: scale(1);
+        transition: transform 1s ease-in-out 
     }
 `
 export const Input = styled.input`

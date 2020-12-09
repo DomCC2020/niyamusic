@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Container, BgImg } from './style'
 import Swiper from 'swiper'
-import 'swiper/dist/css/swiper.css'
+import 'swiper/css/swiper.css'
 
 function Slider (props) {
   const [sliderSwiper, setSliderSwiper] = useState(null)
@@ -17,7 +17,7 @@ function Slider (props) {
         
         speed: 500,
         autoplay: {
-          delay: 666600,
+          delay: 2500,
           disableOnInteraction: false
         },
         pagination: {

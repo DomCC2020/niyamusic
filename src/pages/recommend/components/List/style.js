@@ -14,8 +14,6 @@ export const List = styled.div `
 export const ListItem = styled.div`
   position:relative;
   width: 32.3%;
-  border-radius: ${variables['$border-radius']};
-  overflow:hidden;
   .dec{
     .dec-text{
       font-size: ${variables['$font-size-s']};
@@ -28,6 +26,10 @@ export const ListItem = styled.div`
 export const ImgWrapper = styled.div`
   position:relative;
   background-color:${$gray_100};
+  border-radius: ${variables['$border-radius']};
+  overflow:hidden;
+  // 防止闪烁
+  transform:translateZ(0);
   &::after{
     content:'';
     display: block;
@@ -43,12 +45,15 @@ export const ImgWrapper = styled.div`
     background: linear-gradient(to bottom, rgb(0 0 0 / 40%), transparent);
   }
   .pay-count{
-    font-size: ${variables['$font-size-ss']};
-    color: ${variables['$white']};
     position:absolute;
     top: ${px(5)};
     right: ${px(8)};
     z-index: ${variables['$z-index-l']};
+    >.icon,.pay-count__text{
+      font-size: ${variables['$font-size-ss']};
+      color: ${variables['$white']};
+      margin-left: 4px
+    }
   }
   img{
     position:absolute;
@@ -57,7 +62,6 @@ export const ImgWrapper = styled.div`
     top:0;
     width:100%;
     height:100%;
-    border-radius: ${variables['$border-radius']};
   }
   
 `

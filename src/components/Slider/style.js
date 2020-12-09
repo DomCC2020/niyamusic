@@ -3,7 +3,7 @@ import { variables } from '../../styles/global-style'
 
 export const Container = styled.div`
     width:100%;
-    height:160px;
+    height:130px;
     touch-action:none;
     
     .slider-box{
@@ -12,14 +12,20 @@ export const Container = styled.div`
         position: relative;
         .swiper-wrapper{
             .swiper-slide{
-                width: 100%;
+                width: 83%;
                 height: 100%;
-                
+                border-radius:${variables['$border-radius-sm']};
+                overflow:hidden;
+                transform:scale3d(0.9, 0.9, 1);
+                transition: transform 0.1s ease-in-out 0s;
             }
-            /* .swiper-slide-active{
+            .swiper-slide-active{
+                border-radius:${variables['$border-radius']};
+                overflow:hidden;
                 border-radius: ${variables['$border-radius-lg']};
-                transform:scale(1)
-            }  */
+                transform:scale3d(1, 1, 1);
+                //transform:scaleY(1);
+            } 
         }
         .swiper-pagination-bullet-active{
             background-color:${variables['theme-color']}

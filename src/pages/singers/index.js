@@ -2,7 +2,7 @@ import React from 'react'
 
 function Singers (props) {
   return (
-    <div>歌手</div>
+    <div style={{height: '101%'}}>歌手</div>
   )
 }
 
