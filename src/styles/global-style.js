@@ -1,9 +1,9 @@
 export const hd = 1 // 基础单位
-export function px(size){
-    return `${size * hd}px`
+export function px (size) {
+  return `${size * hd}px`
 }
 export const extendClick = () => {
-    return`
+  return `
     position:relative;
     &::before{
         content:'';
@@ -17,7 +17,7 @@ export const extendClick = () => {
 }
 
 export const nowrap = () =>{
-    return`
+  return `
     text-overflow:ellipsis;
     overflow:hidden;
     white-space:nowrap
@@ -28,13 +28,13 @@ const $body = '#ffbe51'
 const $head = '#cbc0bc'
 
 // 自然色
-export const $blue =  '#0d6efd'
-export const $red = '#f26369'   // 参考异度之刃的红
+export const $blue = '#0d6efd'
+export const $red = '#f26369' // 参考异度之刃的红
 export const $yellow = '#ffed7d'
 export const $cyan = '#17a2b8' 
 export const $indigo = '#6610f2' 
 export const $purple = '#6f42c1'
-export const $pink =  '#d63384'  
+export const $pink = '#d63384'  
 export const $orange = '#fd7e14' 
 export const $green = '#52c41a' 
 export const $teal = '#20c997' 
@@ -52,48 +52,67 @@ export const $gray_800 = '#343a40'
 
 // 主题色和产品色
 export const theme = {
-    'theme-color': $body,
-    $primary: $body,
-    $secondary: $head,
-    $success: $blue,
-    $info: $cyan, 
-    $warning: $yellow, 
-    $danger: $red, 
-    $light: $gray_100, 
-    $dark: $gray_800, 
-    $white
+  'theme-color': $body,
+  $primary: $body,
+  $secondary: $head,
+  $success: $blue,
+  $info: $cyan, 
+  $warning: $yellow, 
+  $danger: $red, 
+  $light: $gray_100, 
+  $dark: $gray_800, 
+  $white
 }
 
 // 字体
 export const font = {
-    '$font-size-ss': px(10),
-    '$font-size-s': px(12),
-    '$font-size-base': px(14),
-    '$font-size-l': px(16),
-    '$font-size-ll': px(18),
+  '$font-size-ss': px(10),
+  '$font-size-s': px(12),
+  '$font-size-base': px(14),
+  '$font-size-l': px(16),
+  '$font-size-ll': px(18),
 
-    '$font-weight-lighter': 'lighter',
-    '$font-weight-light': 300,
-    '$font-weight-normal': 400,
-    '$font-weight-bold': 700,
-    '$font-weight-bolder': 'bolder',
-    '$font-weight-base': 400
+  '$font-weight-lighter': 'lighter',
+  '$font-weight-light': 300,
+  '$font-weight-normal': 400,
+  '$font-weight-bold': 700,
+  '$font-weight-bolder': 'bolder',
+  '$font-weight-base': 400,
+  '$color': $gray_700
+}
+
+export const titleFont = {
+  '$title-size-base': font['$font-size-l'],
+  '$title-color': $gray_600
 }
 
 // border
 export const border = {
-    '$border-width': px(1),
-    '$border-color': $gray_300,
-    '$border-radius': px(5),
-    '$border-radius-lg': px(6),
-    '$border-radius-sm': px(4)
+  '$border-width': px(1),
+  '$border-color': $gray_300,
+  '$border-radius': px(5),
+  '$border-radius-lg': px(6),
+  '$border-radius-sm': px(4)
+}
+
+export const zIndex = {
+  '$z-index': 10,
+  '$z-index-ss': 8,
+  '$z-index-s': 7,
+  '$z-index-l': 11,
+  '$z-index-ll': 12,
+  '$page-zIndex': 999,
+  '$page-zIndex-l': 1000
+
 }
 
 export const variables = {
-    ...theme,
-    ...font,
-    ...border,
-    '$padding-x': px(12),
-    extendClick,
-    nowrap
+  ...theme,
+  ...font,
+  ...titleFont,
+  ...border,
+  ...zIndex,
+  '$padding-x': px(12),
+  extendClick,
+  nowrap
 }

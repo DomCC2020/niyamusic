@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { variables, px  } from '../../styles/global-style'
+import { variables, px } from '../../styles/global-style'
 
 const $space_y = px(12)
 export const Top = styled.div`
@@ -33,9 +33,13 @@ export const Tab = styled.div`
     }
 `
 
-export const Content = styled.div`
+export const Container = styled.div`
     padding:0 ${$space_y};
-    .content-page{
-        padding: 10px 0
+     height: 400px;
+     transform:translateZ(0);
+    .container-search{
+        padding: 0 0 10px
     }
+    
+    
 `
