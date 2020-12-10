@@ -24,8 +24,28 @@ function Slider (props) {
           el: '.swiper-pagination'
         }
       })
-      newSwiper.el.ontouchstart = function () {
+      let startX = 0
+      let startY = 0
+      newSwiper.el.ontouchstart = function (e) {
+        // e.preventDefault()
+        const { clientX, clientY } = e.changedTouches[0]
+        startX = clientX
+        startY = clientY
         newSwiper.autoplay.stop()
+      }
+      newSwiper.el.ontouchmove = function (e) {
+        const { clientX, clientY } = e.changedTouches[0]
+
+        // if (Math.abs(clientX - startX) > 15 || Math.abs(clientY - startY) < 5) {
+        //   e.stopPropagation()
+        // }
+        const moveX = Math.abs(clientX - startX)
+        const moveY = Math.abs(clientY - startY)
+        // console.log(moveY / moveX)
+        if (moveY / moveX < 1) {
+          e.stopPropagation()
+        }
+        // e.preventDefault()
       }
       newSwiper.el.ontouchend = function () {
         newSwiper.autoplay.start()
@@ -36,9 +56,15 @@ function Slider (props) {
         
   return (
     <Container>
-      {bannerList && <div className="slider-box" style={{borderRadius: '10px', overflow: 'hidden'}}>
+      {bannerList && 
+      <div 
+        className="slider-box" 
+        style={{borderRadius: '10px', overflow: 'hidden'}}
+      >
                 
-        <div className="swiper-wrapper">
+        <div 
+          className="swiper-wrapper"
+        >
           {
             bannerList.map(item=>{
               return (

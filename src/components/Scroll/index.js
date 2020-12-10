@@ -1,61 +1,30 @@
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import EaseScroll from './easeScroll'
 
 import { ScrollWrapper } from './style'
 
 const Scroll = (props) => {
+  const { className, children } = props
+  const { onRefresh } = props
   const scrollRef = useRef()
-  const boxRef = useRef()
-  const { children } = props
+  const [eScroll, setEScroll] = useState(null)
   const [translateY, setTranslateY] = useState(0)
-  // let startY = 0
-  // let endY = 0
-  // const touchStart = e => {
-  //   // e.preventDefault()
-  //   startY = e.changedTouches[0].clientY
-  // }
-  // const touchEnd = (e)=>{
-  //   // e.preventDefault()
-  //   // endY = e.changedTouches[0].clientY
-  //   // setTranslateY(endY - startY)
-  //   // console.log(e.screenY)
-  // }
-  // function move (e) {
-  //   // e.preventDefault()
-   
-  //   endY = e.changedTouches[0].clientY
-  //   // 动态计算当前位置
-  //   const moveY = endY - startY
-    
-  //   console.log(moveY)
-  //   setTranslateY(moveY) 
-  //   // setTranslateY(endY - startY)
-  // }
   
   useEffect(()=>{
-    function eEvent (e) {
-      e.preventDefault()
+    if (!eScroll) {
+      const scroll = new EaseScroll(scrollRef.current)
+      setEScroll(scroll)
+      scroll.onRefresh(()=>{
+        onRefresh && onRefresh(function () {
+          scroll.refreshFinish()
+        })
+        // setTimeout(()=>{
+        //   scroll.refreshFinish()
+        // }, 15000)
+      })
     }
-    document.body.addEventListener('touchmove', eEvent, {passive: false})
-    let startY = 0
-    let endY = 0
-    let moveY = 0
-    let currentY = endY - startY
-    scrollRef.current.addEventListener('touchstart', function (e) {
-      startY = e.changedTouches[0].clientY
-      // boxRef.current.style.transform = `translateY(${currentY}px)`
-    })
-    scrollRef.current.addEventListener('touchend', function (e) {
-      endY = e.changedTouches[0].clientY
-      currentY = endY - startY + currentY
-      console.log(currentY)
-    })
-    scrollRef.current.addEventListener('touchmove', function (e) {
-      moveY = e.changedTouches[0].clientY
-
-      boxRef.current.style.transform = `translateY(${moveY - startY + currentY}px)`
-    })
-  }, [scrollRef, boxRef])
-  console.log('render')
+  }, [scrollRef, eScroll, onRefresh])
+  // console.log('render')
   return (
     <ScrollWrapper
       // onTouchStart={touchStart}
@@ -63,9 +32,10 @@ const Scroll = (props) => {
       // onTouchMove={move}
       ref={scrollRef}
     >
-      <div ref={boxRef} className='demo' >
+      <div id='scrollView' className={className}>
         {children}
       </div>
+      
     </ScrollWrapper>
   )
 }

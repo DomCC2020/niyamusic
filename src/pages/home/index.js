@@ -3,13 +3,13 @@ import { renderRoutes } from 'react-router-config'
 import { NavLink } from 'react-router-dom'
 import SearchInput from '../../components/SearchInput'
 import Scroll from '../../components/Scroll'
-import { Top, Tab, Container } from './style'
+import { HomeContainer, Top, Tab, Container } from './style'
 
 function Home (props) {
   const { route } = props
   // console.log(route.routes)
   return (
-    <div>
+    <HomeContainer>
       <Top>
         <Tab>
           {/*  <NavLink to='/recommend' activeClassName='active'>推荐</NavLink> */}
@@ -20,16 +20,11 @@ function Home (props) {
         <NavLink to='/rank' className='icon iconfont icon-touxiang' />
       </Top>
       <Container>
-        <div className='container-search'>
-          <SearchInput />
-        </div>
-        <Scroll>
-          <div className='container-page'>
-            {renderRoutes(route.routes)}
-          </div>
-        </Scroll>
+          
+        {renderRoutes(route.routes)}
+       
       </Container>
-    </div>
+    </HomeContainer>
   )
 }
 
