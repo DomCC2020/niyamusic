@@ -55,12 +55,19 @@ const Scroll = (props) => {
       boxRef.current.style.transform = `translateY(${moveY - startY + currentY}px)`
     })
   }, [scrollRef, boxRef])
-  console.log('render')
+  console.log(translateY)
   return (
     <ScrollWrapper
       // onTouchStart={touchStart}
       // onTouchEnd={touchEnd}
       // onTouchMove={move}
+      onClick={()=>{
+        const { clickDemo } = props
+        clickDemo && clickDemo(function () {
+          alert('出发元素改变')
+          setTranslateY(20)
+        })
+      }}
       ref={scrollRef}
     >
       <div ref={boxRef} className='demo' >

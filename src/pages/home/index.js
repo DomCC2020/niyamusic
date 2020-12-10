@@ -23,7 +23,10 @@ function Home (props) {
         <div className='container-search'>
           <SearchInput />
         </div>
-        <Scroll>
+        <Scroll clickDemo={(fn)=>{
+          fn()
+        }}
+        >
           <div className='container-page'>
             {renderRoutes(route.routes)}
           </div>
