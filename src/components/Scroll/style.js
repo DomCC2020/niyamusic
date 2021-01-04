@@ -10,7 +10,11 @@ export const ScrollWrapper = styled.div`
   
   /* touch-action: none; */
   .scrollView{
-    /* height: calc(100% + 40px ); */
+    /* height:100%; */
+    transform:translate3d(0, 0, 0);
+    margin-top: 0;
+    margin-bottom:0;
+    transform-origin: left top 0;
     // overflow:auto;
     zoom:1;
     
@@ -26,35 +30,60 @@ const dance = keyframes`
   }
 `
 
-export const RefreshLoading = styled.div`
+export const RefreshLoadWrapper = styled.div`
   width: 100%;
   height: 40px;
-  display:flex;
-  justify-content: center;
-  align-items:center;
   margin-top: -40px;
-  >.loading-item{
-    width: 4px;
-    height: 15px;
-    background-color: #ffbe51;
-    opacity: 0.4;
-    margin:0 2px;
-    animation: ${dance} 0.5s ease-in-out infinite;
+  overflow:hidden;
+  >.refresh-load{
+    width: 100%;
+    height: 100%;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    >.loading-item{
+      width: 4px;
+      height: 15px;
+      background-color: #ffbe51;
+      opacity: 0.2;
+      margin:0 2px;
+      &:nth-child(1){
+        transform:scaleY(0.5)
+      }
+      &:nth-child(2){
+        transform:scaleY(0.8)
+      }
+      &:nth-child(3){
+        transform:scaleY(1)
+      }
+      &:nth-child(4){
+        transform:scaleY(0.8)
+      }
+      &:nth-child(5){
+        transform:scaleY(0.5)
+      }
+    }
   }
-  >.loading-item:nth-child(1){
-    animation-delay: 0s
+  >.refresh-load.animate{
+    >.loading-item{
+      animation: ${dance} 0.5s ease-in-out infinite;
+      &:nth-child(1){
+        animation-delay: 0.1s
+      }
+      &:nth-child(2){
+        animation-delay: 0.2s
+      }
+      &:nth-child(3){
+        animation-delay: 0.3s
+      }
+      &:nth-child(4){
+        animation-delay: 0.2s
+      }
+      &:nth-child(5){
+        animation-delay: 0.1s
+      }
+    }
   }
-  >.loading-item:nth-child(2){
-    animation-delay: 0.2s
-  }
-  >.loading-item:nth-child(3){
-    animation-delay: 0.4s
-  }
-  >.loading-item:nth-child(4){
-    animation-delay: 0.6s
-  }
-  >.loading-item:nth-child(5){
-    animation-delay: 0.8s
-  }
+
 
 `

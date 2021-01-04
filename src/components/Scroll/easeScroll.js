@@ -10,6 +10,7 @@ function EaseScroll (wrapperElement, options = {}) {
   this.options = options
   this.wrapper = wrapperElement
   this.scrollView = wrapperElement.querySelector('.scrollView')
+  this.refreshLoadView = wrapperElement.querySelector('.refresh-load')
   
   this.scrollView.scrollTop = _scrollTop || 0
 
@@ -58,25 +59,11 @@ function EaseScroll (wrapperElement, options = {}) {
     const endTouchTime = new Date().getTime()
     // this.scrollView.style.overflowY = 'auto'
     this.scrollView.style.transition = 'transform 0.2s ease 0s'
-    this.startTranslateY = 0
-    
-    if (this.moveY - this.startY > this.refreshY && endTouchTime - startTouchTime > 300) {
+    this.scrollView.style.transform = 'translate3d(0, 0, 0)'  
+    if (this.moveY - this.startY > this.refreshY && endTouchTime - startTouchTime > 300 && this.scrollTop === 0) {
       this.doRefresh = true
-      if (!this.refreshing) {
-        this.isRefreshFinish = false
-      }
-      // if (!this.isRefreshFinish && this.options.needRefresh) {
-      //   this.scrollView.style.transform = 'translateY(30px) translateZ(0)'
-      // }
     }
-    setTimeout(()=>{
-      this.scrollView.style.transform = `translate3d(0,${this.startTranslateY}px, 0)`
-    }, 0)
   }.bind(this))
-  
-  // document.addEventListener('touchmove', function (e) {
-  //   // e.preventDefault()
-  // }, {passive: false})
 }
 
 EaseScroll.prototype = {
@@ -90,6 +77,9 @@ EaseScroll.prototype = {
     this.endRefreshTime = new Date().getTime()
     this.startTranslateY = 0
     this.scrollView.style.transform = `translate3d(0,${this.startTranslateY}px, 0)`
+    const refreshLoadItems = this.refreshLoadView.querySelectorAll('.loading-item')
+    this.refreshLoadView.className = 'refresh-load'
+    setNodesOpacity(refreshLoadItems, 0.2)
   },
   // 刷新事件
   onRefresh: function (callBack) {
@@ -103,30 +93,31 @@ EaseScroll.prototype = {
         if (!this.isRefreshFinish) {
           this.doRefresh = false
           this.startTranslateY = 40
-          // this.scrollView.style.transform = 'translateY(40px) translateZ(0)'
+          this.scrollView.style.transform = `translate3d(0,${this.startTranslateY}px, 0)`
           console.log('请求进行ing')
         }
       }
       else {
-        // console.log(this.doRefresh)
         const startRefreshTime = new Date().getTime()
-        const loadingItem = this.wrapper.getElementsByClassName('loading-item')
-        console.log(loadingItem)
+        const refreshLoadItems = this.refreshLoadView.querySelectorAll('.loading-item')
         if (this.doRefresh) {
           if (Math.abs(this.endRefreshTime - startRefreshTime) < 3000) {
             // loadingItem.style.opacity = 0.4
+            setNodesOpacity(refreshLoadItems, 0.2)
             console.log('刷新太频繁了，请稍后')
             return
           }
-          // console.log('可以发送请求')
+          setNodesOpacity(refreshLoadItems, 1)
+      
           this.refreshing = true
           this.isRefreshFinish = false
           this.startTranslateY = 40
-          // this.scrollView.style.transform = 'translateY(40px) translateZ(0)'
+          this.scrollView.style.transform = `translate3d(0,${this.startTranslateY}px, 0)`
+          this.refreshLoadView.className = 'refresh-load animate'
           callBack && callBack()
         }
         else {
-          // loadingItem.style.opacity = 0.4
+          setNodesOpacity(refreshLoadItems, 0.2)
         }
       }
     }.bind(this))
@@ -135,8 +126,21 @@ EaseScroll.prototype = {
   onScroll: function (callBack) {
     this.wrapper.addEventListener('scroll', function () {
       callBack && callBack(this.scrollTop)
-    }.bind(this))
-    return 
+    }.bind(this)) 
+  },
+
+  onScrollEnd: function (callBack, ignore) {
+    this.wrapper.addEventListener('scroll', function () {
+      const { scrollTop, clientHeight, scrollHeight} = this
+      if (scrollTop + clientHeight >= scrollHeight) {
+        if (ignore) {
+          console.log('不需要上拉加载')
+          return
+        }
+        console.log('滚动到底部')
+        callBack && callBack(this.scrollTop)
+      }
+    }.bind(this)) 
   }
 }
 
@@ -163,7 +167,6 @@ function handleMoveUp (seft, e) {
     const loadingItems = seft.wrapper.querySelectorAll('.loading-item')
     const index = Math.ceil((moveY - startY) / (refreshY / 4)) - 1
     if (loadingItems[index]) {
-      console.log(index)
       loadingItems[index].style.opacity = 1
     }
   
@@ -181,6 +184,16 @@ function handleMoveDown (seft, e) {
 
 function isZero (n) {
   return n === 0
+}
+
+// 设置元素透明度
+function setNodesOpacity (items, opacity) {
+  items = items ? Array.from(items) : []
+  items.forEach(item=>{
+    if (window.Node && item instanceof Node) {
+      item.style.opacity = opacity
+    }
+  })
 }
 
 export default EaseScroll

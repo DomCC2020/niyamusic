@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import classnames from 'classnames'
 import EaseScroll from './easeScroll'
 
-import { ScrollWrapper, RefreshLoading } from './style'
+import { ScrollWrapper, RefreshLoadWrapper } from './style'
 
 const Scroll = (props) => {
   const { className, tranY, children } = props
   const { onRefresh, onScroll } = props
   const scrollRef = useRef()
   const [eScroll, setEScroll] = useState(null)
-  const [translateY, setTranslateY] = useState(0)
+  const [ demo, setDemo ] = useState(0)
   
   useEffect(()=>{
     if (!eScroll) {
@@ -34,6 +34,9 @@ const Scroll = (props) => {
     }
   }, [scrollRef, eScroll, onRefresh, onScroll])
   // console.log('render')
+  eScroll && eScroll.onScrollEnd(()=>{
+    setDemo(1)
+  }, demo === 1)
   const scrollView = classnames('scrollView', className)
   return (
     <ScrollWrapper
@@ -44,13 +47,15 @@ const Scroll = (props) => {
         className={scrollView}
         // className={className}
       >
-        <RefreshLoading>
-          <div className='loading-item' />
-          <div className='loading-item' />
-          <div className='loading-item' />
-          <div className='loading-item' />
-          <div className='loading-item' />
-        </RefreshLoading>
+        <RefreshLoadWrapper>
+          <div className='refresh-load'>
+            <div className='loading-item' />
+            <div className='loading-item' />
+            <div className='loading-item' />
+            <div className='loading-item' />
+            <div className='loading-item' />
+          </div>
+        </RefreshLoadWrapper>
         {children}
       </div>
       
