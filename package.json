@@ -12,6 +12,7 @@
     "@types/redux": "^3.6.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
+    "axios": "^0.21.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.0",
     "babel-loader": "8.1.0",
@@ -21,6 +22,7 @@
     "bfj": "^7.0.2",
     "camelcase": "^6.1.0",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "classnames": "^2.2.6",
     "css-loader": "4.3.0",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
@@ -38,6 +40,7 @@
     "fs-extra": "^9.0.1",
     "html-webpack-plugin": "4.5.0",
     "identity-obj-proxy": "3.0.0",
+    "immer": "^8.0.0",
     "jest": "26.6.0",
     "jest-circus": "26.6.0",
     "jest-resolve": "26.6.0",
@@ -56,6 +59,8 @@
     "react-app-polyfill": "^2.0.0",
     "react-dev-utils": "^11.0.1",
     "react-dom": "^17.0.1",
+    "react-lazyload": "^3.1.0",
+    "react-live-route": "^3.1.6",
     "react-redux": "^7.2.2",
     "react-refresh": "^0.8.3",
     "react-router": "^5.2.0",
@@ -80,7 +85,9 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start:server": "cd NeteaseCloudMusicApi && cross-env PORT=3300 node app.js",
+    "start:react": "node scripts/start.js",
+    "start": "concurrently \"npm run start:server\" \"npm run start:react\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
@@ -161,6 +168,8 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.12.1",
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.3",
     "node-sass": "4"
   }
 }

@@ -1,3 +1,4 @@
+
 export const hd = 1 // 基础单位
 export function px (size) {
   return `${size * hd}px`
@@ -22,6 +23,14 @@ export const nowrap = () =>{
     overflow:hidden;
     white-space:nowrap
     `
+}
+
+export const flexCenter = () =>{
+  return `
+    display: flex;
+    justify-content:center;
+    align-items: center;
+  `
 }
 
 const $body = '#ffbe51'
@@ -114,5 +123,6 @@ export const variables = {
   ...zIndex,
   '$padding-x': px(12),
   extendClick,
-  nowrap
+  nowrap,
+  flexCenter
 }

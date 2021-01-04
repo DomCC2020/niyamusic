@@ -1,16 +1,16 @@
 import React from 'react'
 import { HashRouter, Switch } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
-import routes from './routes'
+import Routes from './routes'
 
 function App () {
   return (
     <div className="App">
+     
       <HashRouter>
-        <Switch>
-          {renderRoutes(routes)}
-        </Switch>
+        <Routes />
       </HashRouter>
+    
     </div>
   )
 }
