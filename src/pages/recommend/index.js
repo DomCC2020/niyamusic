@@ -1,26 +1,82 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+
+import { forceCheck } from 'react-lazyload'
+
+import Scroll from '../../components/Scroll'
 import Slider from '../../components/Slider'
 import List from './components/List'
 
-function Recommend (props) {
-  const bannerList = [1, 2, 3, 4].map(item => {
-    return { imageUrl: 'http://p1.music.126.net/ZYLJ2oZn74yUz5x8NBGkVA==/109951164331219056.jpg' }
-  })
+import * as actionType from '../../actions/recommend'
 
-  const recommendList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => {
-    return {
-      id: 1,
-      picUrl: 'https://p1.music.126.net/fhmefjUfMD-8qtj3JKeHbA==/18999560928537533.jpg',
-      playCount: 17171122,
-      name: '朴树、许巍、李健、郑钧、老狼、赵雷'
+import { ScrollContainer, Loading } from '../../baseUI'
+import { RecommendWrapper } from './style'
+
+function Recommend (props) {
+  const { recommend } = props
+  const { didShow, willHide } = props
+  const { dispatchBanner, dispatchRecommend } = props
+
+  const [isLoading, setLoading] = useState(false)
+
+  useEffect(()=>{
+    !recommend.bannerList.length && dispatchBanner()
+    !recommend.bannerList.length && (function () {
+      setLoading(true)
+      dispatchRecommend()
+        .then(()=>{
+          setLoading(false)
+        })
+    })()
+  }, [dispatchBanner, dispatchRecommend, recommend])
+  useEffect(()=>{
+    if (didShow) {
+      console.log('recommend is show')
     }
-  })
+    if (willHide) {
+      console.log('recommend is hide')
+    }
+  }, [ didShow, willHide ])
+
+  // const handleRefresh = (finish) => {
+  //   setTimeout(()=>{
+  //     console.log('请求完成')
+  //     finish()
+  //   }, 2000)
+  // }
   return (
-    <div>
-      <Slider bannerList={bannerList} />
-      <List recommendList={recommendList} />
-    </div>
+    
+    <RecommendWrapper>
+      {isLoading && <Loading />}
+    
+      <Scroll onScroll={()=>{
+        forceCheck()
+      }}
+      >
+        <ScrollContainer>
+          <Slider bannerList={recommend.bannerList} />
+          <List recommendList={recommend.recommnendList} />
+        </ScrollContainer>
+      </Scroll>
+    </RecommendWrapper>
+    
   )
 }
 
-export default Recommend
+const mapStateToProps = (state) => ({
+  recommend: state.recommend
+})
+
+const mapDispatchToProps = (dipatch) =>{
+  return {
+    dispatchBanner () {
+      return dipatch(actionType.dispatchBanner())
+    },
+    dispatchRecommend () {
+      return dipatch(actionType.dispatchRecommend())
+    }
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Recommend)
